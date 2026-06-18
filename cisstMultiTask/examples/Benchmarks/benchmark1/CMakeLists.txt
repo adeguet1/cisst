@@ -17,10 +17,7 @@ set(REQUIRED_CISST_LIBRARIES cisstCommon cisstOSAbstraction cisstMultiTask cisst
 # find cisst and make sure the required libraries have been compiled
 find_package (cisst COMPONENTS ${REQUIRED_CISST_LIBRARIES})
 
-if (cisst_FOUND_AS_REQUIRED)
-
-  # load cisst configuration
-  include (${CISST_USE_FILE})
+if (cisst_FOUND)
 
   # name the main executable and specifies with source files to use
   add_executable(mtsExBenchmark1
@@ -34,8 +31,9 @@ if (cisst_FOUND_AS_REQUIRED)
   set_property (TARGET mtsExBenchmark1 PROPERTY FOLDER "cisstMultiTask/examples")
 
   # link with the cisst libraries
-  cisst_target_link_libraries(mtsExBenchmark1 ${REQUIRED_CISST_LIBRARIES})
+  target_link_libraries(mtsExBenchmark1 ${cisst_LIBRARIES})
 
-else (cisst_FOUND_AS_REQUIRED)
+
+else (cisst_FOUND)
   message ("Information: code in ${CMAKE_CURRENT_SOURCE_DIR} will not be compiled, it requires ${REQUIRED_CISST_LIBRARIES}")
-endif (cisst_FOUND_AS_REQUIRED)
+endif (cisst_FOUND)

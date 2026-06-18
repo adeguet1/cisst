@@ -1,9 +1,7 @@
 #
-#
 # CMakeLists for cisstStereoVision
 #
-# (C) Copyright 2003-2011 Johns Hopkins University (JHU), All Rights
-# Reserved.
+# (C) Copyright 2003-2026 Johns Hopkins University (JHU), All Rights Reserved.
 #
 # --- begin cisst license - do not edit ---
 #
@@ -15,9 +13,7 @@
 
 project (cisstStereoVisionQt)
 
-# set directories for this project
-cisst_set_directories (cisstQt)
-
+find_package (Qt5 COMPONENTS Core Widgets REQUIRED)
 set (CMAKE_AUTOMOC ON)
 
 set (HEADER_FILES
@@ -76,6 +72,9 @@ include_directories (${CMAKE_CURRENT_BINARY_DIR})
 #       )
 #endif (CISST_HAS_OPENGL)
 
+# Generate ui_ headers from .ui files
+qt5_wrap_ui (QT_UI_HEADERS ${QT_UI_FILES})
+
 cisst_add_library (LIBRARY cisstStereoVisionQt
                    LIBRARY_DIR cisstStereoVision
                    FOLDER cisstStereoVision
@@ -84,7 +83,7 @@ cisst_add_library (LIBRARY cisstStereoVisionQt
                                 cisstMultiTask
                                 cisstStereoVision
                    SETTINGS     cisstQt
-                   SOURCE_FILES ${SOURCE_FILES}
+                   SOURCE_FILES ${SOURCE_FILES} ${QT_UI_HEADERS}
                    HEADER_FILES ${HEADER_FILES} svlExportQt.h)
 
 # link against Qt libraries

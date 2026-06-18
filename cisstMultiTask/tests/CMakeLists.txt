@@ -11,9 +11,6 @@
 #
 # --- end cisst license ---
 
-# paths for headers/libraries
-cisst_set_directories (cisstCommon cisstVector cisstOSAbstraction cisstMultiTask cisstTestsDriver)
-
 # test library
 add_library (cisstMultiTaskTestsLib
              ${IS_SHARED}
@@ -23,7 +20,7 @@ add_library (cisstMultiTaskTestsLib
              mtsTestComponents.h
              mtsTestComponents.cpp)
 set_property (TARGET cisstMultiTaskTestsLib PROPERTY FOLDER "cisstMultiTask/tests")
-cisst_target_link_libraries (cisstMultiTaskTestsLib cisstCommon cisstVector cisstOSAbstraction cisstMultiTask)
+target_link_libraries (cisstMultiTaskTestsLib cisstCommon cisstVector cisstOSAbstraction cisstMultiTask cisstTestsDriver)
 
 # all source files
 set (SOURCE_FILES
@@ -67,14 +64,14 @@ add_definitions(-DCMAKE_CFG_INTDIR_WITH_QUOTES="${CMAKE_CFG_INTDIR}")
 # add executable for C++ tests
 add_executable (cisstMultiTaskTests ${SOURCE_FILES} ${HEADER_FILES})
 set_property (TARGET cisstMultiTaskTests PROPERTY FOLDER "cisstMultiTask/tests")
-target_link_libraries (cisstMultiTaskTests cisstTestsDriver cisstMultiTaskTestsLib)
-cisst_target_link_libraries (cisstMultiTaskTests cisstCommon cisstVector cisstOSAbstraction cisstMultiTask cisstTestsDriver)
+target_link_libraries (cisstMultiTaskTests cisstCommon cisstVector cisstOSAbstraction cisstMultiTask cisstTestsDriver cisstMultiTaskTestsLib)
 
 if (CMAKE_GENERATOR MATCHES "Visual Studio*" )
   # CMake 3.13 introduced the VS_DEBUGGER_COMMAND_ARGUMENTS property
   # Set its default value to run all tests
   set_target_properties(cisstMultiTaskTests PROPERTIES VS_DEBUGGER_COMMAND_ARGUMENTS "-r")
 endif ()
+
 
 # to generate a CTest list of tests
 cisst_add_test (cisstMultiTaskTests ITERATIONS 1 INSTANCES 1)

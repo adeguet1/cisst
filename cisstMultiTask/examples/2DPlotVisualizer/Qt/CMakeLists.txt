@@ -1,6 +1,5 @@
 #
-#
-# (C) Copyright 2012-2013 Johns Hopkins University (JHU), All Rights Reserved.
+# (C) Copyright 2012-2026 Johns Hopkins University (JHU), All Rights Reserved.
 #
 # --- begin cisst license - do not edit ---
 #
@@ -18,14 +17,14 @@ set (REQUIRED_CISST_LIBRARIES cisstCommon
                               cisstOSAbstraction
                               cisstMultiTask
                               cisstMultiTaskQt
-                              cisstParameterTypes)
+                              cisstParameterTypes
+                              cisstQt)
 
-# Set include/link directories
-cisst_set_directories (${REQUIRED_CISST_LIBRARIES})
+find_package (cisst COMPONENTS ${REQUIRED_CISST_LIBRARIES})
 
 add_executable (mtsExQt2DPlotVisualizerQt
                 ../TestComponent.h
                 ../TestComponent.cpp
                 main.cpp)
 set_property (TARGET mtsExQt2DPlotVisualizerQt PROPERTY FOLDER "cisstMultiTask/examples")
-cisst_target_link_libraries (mtsExQt2DPlotVisualizerQt ${REQUIRED_CISST_LIBRARIES})
+target_link_libraries (mtsExQt2DPlotVisualizerQt ${cisst_LIBRARIES})
